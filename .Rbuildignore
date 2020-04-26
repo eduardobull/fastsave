@@ -1,0 +1,10 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.vscode
+
+^build$
+^local$
+^configure$
+^config.status$
+^config.log$
+^autom4te.cache$

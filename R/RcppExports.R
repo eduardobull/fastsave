@@ -9,19 +9,19 @@ impl_lz4Uncompress <- function(raw) {
     .Call(`_genser_impl_lz4Uncompress`, raw)
 }
 
-impl_zstdCompress <- function(object, level) {
-    .Call(`_genser_impl_zstdCompress`, object, level)
-}
-
-impl_zstdUncompress <- function(raw) {
-    .Call(`_genser_impl_zstdUncompress`, raw)
-}
-
 impl_snappyCompress <- function(object) {
     .Call(`_genser_impl_snappyCompress`, object)
 }
 
 impl_snappyUncompress <- function(raw) {
     .Call(`_genser_impl_snappyUncompress`, raw)
+}
+
+impl_zstdCompress <- function(object, level) {
+    .Call(`_genser_impl_zstdCompress`, object, level)
+}
+
+impl_zstdUncompress <- function(raw) {
+    .Call(`_genser_impl_zstdUncompress`, raw)
 }
 

@@ -1,30 +1,17 @@
 #' @export
 saveObject <- function(object, path, compressor = c("zstd", "snappy", "lz4"), ...) {
-  compressor <-  switch(match.arg(compressor),
-                        snappy = compressSNPY,
-                        zstd = compressZSTD,
-                        lz4 = compressLZ4)
+  object.ser <- serialize(object, connection = NULL)
+  object.comp <- compress(object.ser, compressor, ...)
 
-  object_comp <- compressor(serialize(object, connection = NULL), ...)
-
-  con <- file(path, "wb")
-  on.exit(close(con))
-
-  writeBin(object_comp, con)
+  writeBin(object.comp, path)
 }
 
 #' @export
-readObject <- function(path, decompressor = c("zstd", "snappy", "lz4"), ...) {
-  decompressor <-  switch(match.arg(decompressor),
-                          snappy = decompressSNPY,
-                          zstd = decompressZSTD,
-                          lz4 = decompressLZ4)
+readObject <- function(path, decompressor = c("auto", "zstd", "snappy", "lz4"), ...) {
+  object.comp <- readBin(path, "raw", n = file.size(path))
+  object.ser <- decompress(object.comp, decompressor, ...)
 
-  con <- file(path, "rb")
-  on.exit(close(con))
-
-  raw <- readBin(con, "raw", n = file.size(path))
-  unserialize(decompressor(raw, ...))
+  unserialize(object.ser)
 }
 
 #' @export
@@ -38,7 +25,7 @@ readLZ4 <- function(path) {
 }
 
 #' @export
-saveZSTD <- function(object, path, level = 1) {
+saveZSTD <- function(object, path, level = -1) {
   saveObject(object, path, "zstd", level = level)
 }
 
