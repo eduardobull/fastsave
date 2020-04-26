@@ -2,19 +2,16 @@
 #include "zstd.h"
 #include "lz4frame.h"
 #include "snappy.h"
-// [[Rcpp::depends(RApiSerialize)]]
-#include <RApiSerializeAPI.h>
 
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-RawVector do_lzCompress(RObject object, int level)
+RawVector impl_lz4Compress(RObject object, int level)
 {
-  RawVector src;
-  if (is<RawVector>(object))
-    src = as<RawVector>(object);
-  else
-    src = RawVector(serializeToRaw(object));
+  if (!is<RawVector>(object))
+    stop("object type must be RAWSXP (raw vector), got %s", type2name(object));
+
+  RawVector src = as<RawVector>(object);
 
   int max_level = LZ4F_compressionLevel_max();
   if (level > max_level)
@@ -43,7 +40,7 @@ RawVector do_lzCompress(RObject object, int level)
 }
 
 // [[Rcpp::export]]
-RObject do_lzUncompress(RObject raw)
+RawVector impl_lz4Uncompress(RObject raw)
 {
   if (!is<RawVector>(raw))
     stop("object type must be RAWSXP (raw vector), got %s", type2name(raw));
@@ -83,25 +80,27 @@ RObject do_lzUncompress(RObject raw)
 
   LZ4F_freeDecompressionContext(dctx);
 
-  auto r_object = unserializeFromRaw(output);
-
-  return r_object;
+  return output;
 }
 
 // [[Rcpp::export]]
-RawVector do_zstdCompress(RObject object, int level)
+RawVector impl_zstdCompress(RObject object, int level)
 {
-  RawVector src;
-  if (is<RawVector>(object))
-    src = as<RawVector>(object);
-  else
-    src = RawVector(serializeToRaw(object));
+  if (!is<RawVector>(object))
+    stop("object type must be RAWSXP (raw vector), got %s", type2name(object));
+
+  RawVector src = as<RawVector>(object);
 
   int max_level = ZSTD_maxCLevel();
   if (level > max_level)
   {
     warning("level should be <= %d, using %d", max_level, max_level);
     level = max_level;
+  }
+  else if (level < 1)
+  {
+    warning("level should be >= 1, using 1");
+    level = 1;
   }
 
   auto buffer_size = ZSTD_compressBound(src.size());
@@ -119,7 +118,7 @@ RawVector do_zstdCompress(RObject object, int level)
 }
 
 // [[Rcpp::export]]
-RObject do_zstdUncompress(RObject raw)
+RawVector impl_zstdUncompress(RObject raw)
 {
   if (!is<RawVector>(raw))
     stop("object type must be RAWSXP (raw vector), got %s", type2name(raw));
@@ -140,19 +139,16 @@ RObject do_zstdUncompress(RObject raw)
   if (ZSTD_isError(nb))
     stop("internal error in ZSTD_decompress(): %s", ZSTD_getErrorName(nb));
 
-  auto r_object = unserializeFromRaw(output);
-
-  return r_object;
+  return output;
 }
 
 // [[Rcpp::export]]
-RawVector do_snappyCompress(RObject object, int level)
+RawVector impl_snappyCompress(RObject object)
 {
-  RawVector src;
-  if (is<RawVector>(object))
-    src = as<RawVector>(object);
-  else
-    src = RawVector(serializeToRaw(object));
+  if (!is<RawVector>(object))
+    stop("object type must be RAWSXP (raw vector), got %s", type2name(object));
+
+  RawVector src = as<RawVector>(object);
 
   auto buffer_size = snappy::MaxCompressedLength(src.size());
   auto buffer = std::unique_ptr<char[]>(new char[buffer_size]);
@@ -168,7 +164,7 @@ RawVector do_snappyCompress(RObject object, int level)
 }
 
 // [[Rcpp::export]]
-RObject do_snappyUncompress(RObject raw)
+RawVector impl_snappyUncompress(RObject raw)
 {
   if (!is<RawVector>(raw))
     stop("object type must be RAWSXP (raw vector), got %s", type2name(raw));
@@ -178,9 +174,7 @@ RObject do_snappyUncompress(RObject raw)
   size_t output_length;
   auto length_ok = snappy::GetUncompressedLength((char *)src.begin(), src.size(), &output_length);
   if (!length_ok)
-  {
     stop("internal error in snappy::GetUncompressedLength(): content size error");
-  }
 
   auto output = RawVector(output_length);
 
@@ -188,7 +182,5 @@ RObject do_snappyUncompress(RObject raw)
   if (!ok)
     stop("internal error in snappy::Uncompress()");
 
-  auto r_object = unserializeFromRaw(output);
-
-  return r_object;
+  return output;
 }

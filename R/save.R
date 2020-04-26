@@ -1,16 +1,11 @@
-# #' @export
-# saveLZ4 <- function(object, path, level = 1) {
-#   object_comp <- do_lzCompress(object, 1)
-
-#   con <- file(path, "wb")
-#   on.exit(close(con))
-
-#   writeBin(object_comp, con)
-# }
-
 #' @export
-saveLZ4 <- function(object, path, level = 1) {
-  object_comp <- do_lzCompress(object, 1)
+saveObject <- function(object, path, compressor = c("zstd", "snappy", "lz4"), ...) {
+  compressor <-  switch(match.arg(compressor),
+                        snappy = compressSNPY,
+                        zstd = compressZSTD,
+                        lz4 = compressLZ4)
+
+  object_comp <- compressor(serialize(object, connection = NULL), ...)
 
   con <- file(path, "wb")
   on.exit(close(con))
@@ -19,48 +14,45 @@ saveLZ4 <- function(object, path, level = 1) {
 }
 
 #' @export
-readLZ4 <- function(path, level = 1) {
+readObject <- function(path, decompressor = c("zstd", "snappy", "lz4"), ...) {
+  decompressor <-  switch(match.arg(decompressor),
+                          snappy = decompressSNPY,
+                          zstd = decompressZSTD,
+                          lz4 = decompressLZ4)
+
   con <- file(path, "rb")
   on.exit(close(con))
 
   raw <- readBin(con, "raw", n = file.size(path))
-  do_lzUncompress(raw)
+  unserialize(decompressor(raw, ...))
+}
+
+#' @export
+saveLZ4 <- function(object, path, level = 1) {
+  saveObject(object, path, "lz4", level = level)
+}
+
+#' @export
+readLZ4 <- function(path) {
+  readObject(path, "lz4")
 }
 
 #' @export
 saveZSTD <- function(object, path, level = 1) {
-  object_comp <- do_zstdCompress(object, 1)
-
-  con <- file(path, "wb")
-  on.exit(close(con))
-
-  writeBin(object_comp, con)
+  saveObject(object, path, "zstd", level = level)
 }
 
 #' @export
-readZSTD <- function(path, level = 1) {
-  con <- file(path, "rb")
-  on.exit(close(con))
-
-  raw <- readBin(con, "raw", n = file.size(path))
-  do_zstdUncompress(raw)
+readZSTD <- function(path) {
+  readObject(path, "zstd")
 }
 
 #' @export
-saveSNP <- function(object, path, level = 1) {
-  object_comp <- do_snappyCompress(object, 1)
-
-  con <- file(path, "wb")
-  on.exit(close(con))
-
-  writeBin(object_comp, con)
+saveSNPY <- function(object, path) {
+  saveObject(object, path, "snappy")
 }
 
 #' @export
-readSNP <- function(path, level = 1) {
-  con <- file(path, "rb")
-  on.exit(close(con))
-
-  raw <- readBin(con, "raw", n = file.size(path))
-  do_snappyUncompress(raw)
+readSNPY <- function(path) {
+  readObject(path, "snappy")
 }
