@@ -55,14 +55,19 @@ lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
 AC_MSG_NOTICE([Building lz4 library])
 
 $(cd ${lz4_src_dir} &&\
-	find . -type d -exec mkdir -p -- ${lz4_build_dir}/{} \; &&\
-	find . -type f \
-		\( -regex '.*\.c\(pp\)?' -o \
-		   -regex '.*\.h\(pp\)?' -o \
-		   -name 'Makefile*' \) \
-		-exec cp --parents {} ${lz4_build_dir} \; &&\
+	cp -r * ${lz4_build_dir}
 	cd ${lz4_build_dir}/lib &&\
 	make liblz4.a > /dev/null 2>&1)
+
+# $(cd ${lz4_src_dir} &&\
+# 	find . -type d -exec mkdir -p -- ${lz4_build_dir}/{} \; &&\
+# 	find . -type f \
+# 		\( -regex '.*\.c\(pp\)?' -o \
+# 		   -regex '.*\.h\(pp\)?' -o \
+# 		   -name 'Makefile*' \) \
+# 		-exec cp --parents {} ${lz4_build_dir} \; &&\
+# 	cd ${lz4_build_dir}/lib &&\
+# 	make liblz4.a > /dev/null 2>&1)
 
 AC_MSG_NOTICE([Finished building lz4 library])
 
@@ -83,17 +88,22 @@ zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
 
 AC_MSG_NOTICE([Building zstd library])
 
-$(cd ${zstd_build_dir} &&\
-	cmake "${zstd_src_dir}/build/cmake/" \
-		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
-		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
-		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DZSTD_BUILD_STATIC=ON \
-		-DZSTD_BUILD_SHARED=OFF \
-		-DZSTD_BUILD_PROGRAMS=OFF \
-		-DZSTD_BUILD_TESTS=OFF > /dev/null 2>&1 &&\
-	make > /dev/null 2>&1)
+$(cd ${zstd_src_dir} &&\
+	cp -r * ${zstd_build_dir}
+	cd ${zstd_build_dir}/lib &&\
+	make libzstd.a > /dev/null 2>&1)
+
+# $(cd ${zstd_build_dir} &&\
+# 	cmake "${zstd_src_dir}/build/cmake/" \
+# 		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
+# 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
+# 		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+# 		-DCMAKE_BUILD_TYPE=Release \
+# 		-DZSTD_BUILD_STATIC=ON \
+# 		-DZSTD_BUILD_SHARED=OFF \
+# 		-DZSTD_BUILD_PROGRAMS=OFF \
+# 		-DZSTD_BUILD_TESTS=OFF > /dev/null 2>&1 &&\
+# 	make > /dev/null 2>&1)
 
 AC_MSG_NOTICE([Finished building zstd library])
 

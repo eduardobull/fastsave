@@ -6,6 +6,9 @@ endef
 
 default: install
 
+check: clean prepare
+	R CMD check . || less $(pwd)..Rcheck/00install.out
+
 prepare:
 	autoconf
 	Rscript --vanilla -e "Rcpp::compileAttributes()"
@@ -26,25 +29,25 @@ clean:
 	rm -rfv autom4te.cache configure config.log config.status src/Makevars
 
 update-lz4:
-	$(eval lz4_version=$(call latest_version,lz4/lz4))
+	$(eval lz4_version=$(subst v,,$(call latest_version,lz4/lz4)))
 	rm -rf ${THIRD_PARTY_DIR}/lz4-*
 	cd ${THIRD_PARTY_DIR} && \
-		curl -L "https://github.com/lz4/lz4/archive/${lz4_version}.tar.gz" | tar xz
-	sed -i 's/^lz4_version=.*/lz4_version="$(subst v,,${lz4_version})"/' configure.ac
+		curl -L "https://github.com/lz4/lz4/archive/v${lz4_version}.tar.gz" | tar xz lz4-${lz4_version}/lib lz4-${lz4_version}/Makefile.inc
+	sed -i 's/^lz4_version=.*/lz4_version="${lz4_version}"/' configure.ac
 
 update-zstd:
-	$(eval zstd_version=$(call latest_version,facebook/zstd))
+	$(eval zstd_version=$(subst v,,$(call latest_version,facebook/zstd)))
 	rm -rf ${THIRD_PARTY_DIR}/zstd-*
 	cd ${THIRD_PARTY_DIR} && \
-		curl -L "https://github.com/facebook/zstd/archive/${zstd_version}.tar.gz" | tar xz
-	sed -i 's/^zstd_version=.*/zstd_version="$(subst v,,${zstd_version})"/' configure.ac
+		curl -L "https://github.com/facebook/zstd/archive/v${zstd_version}.tar.gz" | tar xz zstd-${zstd_version}/lib
+	sed -i 's/^zstd_version=.*/zstd_version="${zstd_version}"/' configure.ac
 
 update-snappy:
-	$(eval snappy_version=$(call latest_version,google/snappy))
+	$(eval snappy_version=$(subst v,,$(call latest_version,google/snappy)))
 	rm -rf ${THIRD_PARTY_DIR}/snappy-*
 	cd ${THIRD_PARTY_DIR} && \
 		curl -L "https://github.com/google/snappy/archive/${snappy_version}.tar.gz" | tar xz
-	sed -i 's/^snappy_version=.*/snappy_version="$(subst v,,${snappy_version})"/' configure.ac
+	sed -i 's/^snappy_version=.*/snappy_version="${snappy_version}"/' configure.ac
 
 update-all: update-lz4 update-snappy update-zstd
 
