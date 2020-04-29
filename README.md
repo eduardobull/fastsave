@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/eduardobull/fastsave.svg?branch=master)](https://travis-ci.com/eduardobull/fastsave)
+
 About
 -----
 
