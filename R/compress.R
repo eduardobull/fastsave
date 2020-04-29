@@ -11,7 +11,7 @@ decompress <- function(raw, decompressor = c("auto", "zstd", "snappy", "lz4"), .
   zstd.sig <- as.raw(c(0x28, 0xb5, 0x2f, 0xfd))
   lz4.sig <- as.raw(c(0x04, 0x22, 0x4d, 0x18))
 
-  file.sig <- head(raw, 4)
+  file.sig <- utils::head(raw, 4)
   decompressor <-  switch(match.arg(decompressor),
                           snappy = impl_snappyUncompress,
                           zstd = impl_zstdUncompress,

@@ -7,7 +7,7 @@ endef
 default: install
 
 check: clean prepare
-	R CMD check . || less $(pwd)..Rcheck/00install.out
+	R CMD check .
 
 prepare:
 	autoconf
@@ -26,7 +26,7 @@ install:
 clean:
 	find . -regex '.*\.s?o$$' -exec rm -v {} \;
 	find . -regex '.*\.a$$' -exec rm -v {} \;
-	rm -rfv autom4te.cache configure config.log config.status src/Makevars
+	rm -rfv autom4te.cache configure config.log config.status src/Makevars ..Rcheck
 
 update-lz4:
 	$(eval lz4_version=$(subst v,,$(call latest_version,lz4/lz4)))

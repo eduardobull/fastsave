@@ -12,7 +12,7 @@ Authors@R: c(
 Maintainer: Eduardo Gutierres <eduardo.bull@gmail.com>
 Description: Serialization and compression of R objects using Zstandard, Snappy or LZ4 compressors,
   providing a faster alternative to saveRDS and readRDS.
-License: MIT
+License: MIT + file LICENSE
 Copyright: This package includes sources of the LZ4 library written
   by Yann Collet, of the Zstandard library owned by Facebook, Inc.
   and of the Snappy library owned by Google Inc.
