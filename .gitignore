@@ -9,11 +9,11 @@ src/*.o
 src/*.so
 src/*.dll
 
-Makevars
+# Makevars
 local/
 .vscode/
 
 config.status
 config.log
 autom4te.cache/
-configure
+#configure

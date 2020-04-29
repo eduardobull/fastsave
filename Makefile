@@ -6,6 +6,10 @@ endef
 
 default: install
 
+prepare:
+	autoconf
+	Rscript --vanilla -e "Rcpp::compileAttributes()"
+
 build:
 	Rscript --vanilla -e "Rcpp::compileAttributes()"
 	Rscript --vanilla -e "devtools::build()"
@@ -23,27 +27,24 @@ clean:
 
 update-lz4:
 	$(eval lz4_version=$(call latest_version,lz4/lz4))
-	rm -rf ${THIRD_PARTY_DIR}/lz4*
+	rm -rf ${THIRD_PARTY_DIR}/lz4-*
 	cd ${THIRD_PARTY_DIR} && \
-		curl -L "https://github.com/lz4/lz4/archive/${lz4_version}.tar.gz" | tar xz &&\
-		mv lz4-* lz4
-	# sed -i 's/^lz4_version=.*/lz4_version="$(subst v,,${lz4_version})"/' configure.ac
+		curl -L "https://github.com/lz4/lz4/archive/${lz4_version}.tar.gz" | tar xz
+	sed -i 's/^lz4_version=.*/lz4_version="$(subst v,,${lz4_version})"/' configure.ac
 
 update-zstd:
 	$(eval zstd_version=$(call latest_version,facebook/zstd))
-	rm -rf ${THIRD_PARTY_DIR}/zstd*
+	rm -rf ${THIRD_PARTY_DIR}/zstd-*
 	cd ${THIRD_PARTY_DIR} && \
-		curl -L "https://github.com/facebook/zstd/archive/${zstd_version}.tar.gz" | tar xz &&\
-		mv zstd-* zstd
-	# sed -i 's/^zstd_version=.*/zstd_version="$(subst v,,${zstd_version})"/' configure.ac
+		curl -L "https://github.com/facebook/zstd/archive/${zstd_version}.tar.gz" | tar xz
+	sed -i 's/^zstd_version=.*/zstd_version="$(subst v,,${zstd_version})"/' configure.ac
 
 update-snappy:
 	$(eval snappy_version=$(call latest_version,google/snappy))
-	rm -rf ${THIRD_PARTY_DIR}/snappy*
+	rm -rf ${THIRD_PARTY_DIR}/snappy-*
 	cd ${THIRD_PARTY_DIR} && \
-		curl -L "https://github.com/google/snappy/archive/${snappy_version}.tar.gz" | tar xz &&\
-		mv snappy-* snappy
-	# sed -i 's/^snappy_version=.*/snappy_version="$(subst v,,${snappy_version})"/' configure.ac
+		curl -L "https://github.com/google/snappy/archive/${snappy_version}.tar.gz" | tar xz
+	sed -i 's/^snappy_version=.*/snappy_version="$(subst v,,${snappy_version})"/' configure.ac
 
 update-all: update-lz4 update-snappy update-zstd
 

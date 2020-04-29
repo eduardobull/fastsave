@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "third_party/zstd/lib/zstd.h"
+#include <zstd.h>
 
 using namespace Rcpp;
 

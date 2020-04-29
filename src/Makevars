@@ -1,5 +1,5 @@
 CXX_STD = CXX11
 
-PKG_CFLAGS= -march=native -O2 -pipe -fno-plt -I/home/eduardo/Development/R/fastsave/build/lz4/include -I/home/eduardo/Development/R/fastsave/build/zstd/include -I/home/eduardo/Development/R/fastsave/build/snappy/include
-PKG_CXXFLAGS= -march=native -O2 -pipe -fno-plt -I/home/eduardo/Development/R/fastsave/build/lz4/include -I/home/eduardo/Development/R/fastsave/build/zstd/include -I/home/eduardo/Development/R/fastsave/build/snappy/include
-PKG_LIBS= /home/eduardo/Development/R/fastsave/build/lz4/lib/liblz4.a /home/eduardo/Development/R/fastsave/build/zstd/lib/libzstd.a /home/eduardo/Development/R/fastsave/build/snappy/libsnappy.a
+PKG_CFLAGS= -march=native -O2 -pipe -fno-plt -I/tmp/lz4_build_W4zljr/include -I/tmp/zstd_build_JCN41r/include -I/tmp/snappy_build_zkmUNN/include
+PKG_CXXFLAGS= -march=native -O2 -pipe -fno-plt -I/tmp/lz4_build_W4zljr/include -I/tmp/zstd_build_JCN41r/include -I/tmp/snappy_build_zkmUNN/include
+PKG_LIBS= /tmp/lz4_build_W4zljr/lib/liblz4.a /tmp/zstd_build_JCN41r/lib/libzstd.a /tmp/snappy_build_zkmUNN/libsnappy.a

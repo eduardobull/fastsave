@@ -3,6 +3,7 @@ Type: Package
 Title: Serialization and compression of R objects using modern compressors
 Version: 1.0
 Date: 2020-04-18
+Author: Eduardo Gutierres <eduardo.bull@gmail.com>
 Authors@R: c(
   person("Eduardo", "Gutierres", email = "eduardo.bull@gmail.com", role = c("aut", "cre", "cph")),
   person("Yann", "Collet", role = "cph", comment = "Bundled LZ4 code"),

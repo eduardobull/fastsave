@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "third_party/snappy/snappy.h"
+#include "third_party/snappy-1.1.8/snappy.h"
 
 using namespace Rcpp;
 

@@ -10,6 +10,19 @@ if test -z "${R_HOME}"; then
     AC_MSG_ERROR([Could not determine R_HOME.])
 fi
 
+# We are using C++
+AC_LANG(C++)
+AC_REQUIRE_CPP
+
+## Check the C++ compiler using the CXX value set
+AC_PROG_CXX
+
+AC_CHECK_PROG(CMAKE_CHECK, cmake, yes)
+if test x"$CMAKE_CHECK" != x"yes" ; then
+    AC_MSG_ERROR([Could not find cmake.])
+fi
+
+
 ## Get R compilers and flags
 R_CC=$("${R_HOME}/bin/R" CMD config CC)
 R_CFLAGS=$("${R_HOME}/bin/R" CMD config CFLAGS)
@@ -24,17 +37,6 @@ export CC=${R_CC}
 export CFLAGS=${R_CFLAGS}
 export CPPFLAGS=${R_CPPFLAGS}
 
-# We are using C++
-AC_LANG(C++)
-AC_REQUIRE_CPP
-
-## Check the C++ compiler using the CXX value set
-AC_PROG_CXX
-
-AC_CHECK_PROG(CMAKE_CHECK, cmake, yes)
-if test x"$CMAKE_CHECK" != x"yes" ; then
-    AC_MSG_ERROR([Could not find cmake.])
-fi
 
 AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${R_CFLAGS}"])
 AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${R_CXXFLAGS}"])
@@ -47,9 +49,8 @@ third_party_dir="${root_dir}/src/third_party"
 ## LZ4
 lz4_version="1.9.2"
 
-lz4_src_dir="${third_party_dir}/lz4"
-lz4_build_dir="${root_dir}/build/lz4"
-# lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
+lz4_src_dir="${third_party_dir}/lz4-$lz4_version"
+lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
 
 AC_MSG_NOTICE([Building lz4 library])
 
@@ -77,14 +78,12 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${LZ4_LIBS}"])
 ## ZSTD
 zstd_version="1.4.4"
 
-zstd_src_dir="${third_party_dir}/zstd"
-zstd_build_dir="${root_dir}/build/zstd"
-# zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
+zstd_src_dir="${third_party_dir}/zstd-$zstd_version"
+zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
 
 AC_MSG_NOTICE([Building zstd library])
 
-$(mkdir -p ${zstd_build_dir} &&\
-	cd ${zstd_build_dir} &&\
+$(cd ${zstd_build_dir} &&\
 	cmake "${zstd_src_dir}/build/cmake/" \
 		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
@@ -110,14 +109,12 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${ZSTD_LIBS}"])
 ## SNAPPY
 snappy_version="1.1.8"
 
-snappy_src_dir="${third_party_dir}/snappy"
-snappy_build_dir="${root_dir}/build/snappy"
-# snappy_build_dir=$(mktemp -d -t snappy_build_XXXXXX)
+snappy_src_dir="${third_party_dir}/snappy-$snappy_version"
+snappy_build_dir=$(mktemp -d -t snappy_build_XXXXXX)
 
 AC_MSG_NOTICE([Building snappy library])
 
-$(mkdir -p ${snappy_build_dir} &&\
-	cd ${snappy_build_dir} &&\
+$(cd ${snappy_build_dir} &&\
 	cmake "${snappy_src_dir}" \
 		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
