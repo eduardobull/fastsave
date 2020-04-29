@@ -1,0 +1,5 @@
+CXX_STD = CXX11
+
+PKG_CFLAGS= -march=native -O2 -pipe -fno-plt -I/home/eduardo/Development/R/fastsave/build/lz4/include -I/home/eduardo/Development/R/fastsave/build/zstd/include -I/home/eduardo/Development/R/fastsave/build/snappy/include
+PKG_CXXFLAGS= -march=native -O2 -pipe -fno-plt -I/home/eduardo/Development/R/fastsave/build/lz4/include -I/home/eduardo/Development/R/fastsave/build/zstd/include -I/home/eduardo/Development/R/fastsave/build/snappy/include
+PKG_LIBS= /home/eduardo/Development/R/fastsave/build/lz4/lib/liblz4.a /home/eduardo/Development/R/fastsave/build/zstd/lib/libzstd.a /home/eduardo/Development/R/fastsave/build/snappy/libsnappy.a
