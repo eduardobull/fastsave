@@ -1,5 +1,5 @@
 #include <Rcpp.h>
-#include "lz4frame.h"
+#include "third_party/lz4/lib/lz4frame.h"
 
 using namespace Rcpp;
 

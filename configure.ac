@@ -47,8 +47,8 @@ third_party_dir="${root_dir}/src/third_party"
 ## LZ4
 lz4_version="1.9.2"
 
-lz4_src_dir="${third_party_dir}/lz4-$lz4_version"
-lz4_build_dir="${root_dir}/build/lz4-$lz4_version"
+lz4_src_dir="${third_party_dir}/lz4"
+lz4_build_dir="${root_dir}/build/lz4"
 # lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
 
 AC_MSG_NOTICE([Building lz4 library])
@@ -77,13 +77,14 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${LZ4_LIBS}"])
 ## ZSTD
 zstd_version="1.4.4"
 
-zstd_src_dir="${third_party_dir}/zstd-$zstd_version"
-zstd_build_dir="${root_dir}/build/zstd-$zstd_version"
+zstd_src_dir="${third_party_dir}/zstd"
+zstd_build_dir="${root_dir}/build/zstd"
 # zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
 
 AC_MSG_NOTICE([Building zstd library])
 
-$(cd ${zstd_build_dir} &&\
+$(mkdir -p ${zstd_build_dir} &&\
+	cd ${zstd_build_dir} &&\
 	cmake "${zstd_src_dir}/build/cmake/" \
 		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
@@ -109,13 +110,14 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${ZSTD_LIBS}"])
 ## SNAPPY
 snappy_version="1.1.8"
 
-snappy_src_dir="${third_party_dir}/snappy-$snappy_version"
-snappy_build_dir="${root_dir}/build/snappy-$snappy_version"
+snappy_src_dir="${third_party_dir}/snappy"
+snappy_build_dir="${root_dir}/build/snappy"
 # snappy_build_dir=$(mktemp -d -t snappy_build_XXXXXX)
 
 AC_MSG_NOTICE([Building snappy library])
 
-$(cd ${snappy_build_dir} &&\
+$(mkdir -p ${snappy_build_dir} &&\
+	cd ${snappy_build_dir} &&\
 	cmake "${snappy_src_dir}" \
 		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
