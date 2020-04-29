@@ -32,14 +32,14 @@ R_CPPFLAGS=`"${R_HOME}/bin/R" CMD config CPPFLAGS`
 
 # Set default compilers and flags
 export CXX=${R_CXX}
-export CXXFLAGS=${R_CXXFLAGS}
+export CXXFLAGS="${R_CXXFLAGS} -fPIC"
 export CC=${R_CC}
-export CFLAGS=${R_CFLAGS}
+export CFLAGS="${R_CFLAGS} -fPIC"
 export CPPFLAGS=${R_CPPFLAGS}
 
 
-AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${R_CFLAGS}"])
-AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${R_CXXFLAGS}"])
+AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${CFLAGS}"])
+AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${CXXFLAGS}"])
 
 root_dir="$(pwd)"
 third_party_dir="${root_dir}/src/third_party"
@@ -95,8 +95,8 @@ $(cd ${zstd_src_dir} &&\
 
 # $(cd ${zstd_build_dir} &&\
 # 	cmake "${zstd_src_dir}/build/cmake/" \
-# 		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
-# 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
+# 		-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+# 		-DCMAKE_C_FLAGS="${CFLAGS}" \
 # 		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 # 		-DCMAKE_BUILD_TYPE=Release \
 # 		-DZSTD_BUILD_STATIC=ON \
