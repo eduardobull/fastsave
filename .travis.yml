@@ -1,9 +1,11 @@
-sudo: required
+arch: amd64
+os: linux
+dist: bionic
+compiler: clang
 language: r
 r:
   - release
-  - oldrel
-  - devel
+cache: packages
 addons:
   apt:
     packages:
