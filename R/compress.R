@@ -1,4 +1,3 @@
-#' @export
 compress <- function(raw, compressor = c("zstd", "snappy", "lz4"), ...) {
   compressor <-  switch(match.arg(compressor),
                         snappy = impl_snappyCompress,
@@ -8,7 +7,6 @@ compress <- function(raw, compressor = c("zstd", "snappy", "lz4"), ...) {
   compressor(raw, ...)
 }
 
-#' @export
 decompress <- function(raw, decompressor = c("auto", "zstd", "snappy", "lz4"), ...) {
   zstd.sig <- as.raw(c(0x28, 0xb5, 0x2f, 0xfd))
   lz4.sig <- as.raw(c(0x04, 0x22, 0x4d, 0x18))
@@ -39,21 +37,21 @@ decompressLZ4 <- function(raw) {
 }
 
 #' @export
-compressZSTD <- function(raw, level = 1, ...) {
+compressZstd <- function(raw, level = 1, ...) {
   compress(raw, "zstd", level = level)
 }
 
 #' @export
-decompressZSTD <- function(raw) {
+decompressZstd <- function(raw) {
   decompress(raw, "zstd")
 }
 
 #' @export
-compressSNPY <- function(raw, ...) {
+compressSnappy <- function(raw, ...) {
   compress(raw, "snappy")
 }
 
 #' @export
-decompressSNPY <- function(raw) {
+decompressSnappy <- function(raw) {
   decompress(raw, "snappy")
 }

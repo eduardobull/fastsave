@@ -2,26 +2,26 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 impl_lz4Compress <- function(object, level) {
-    .Call(`_genser_impl_lz4Compress`, object, level)
+    .Call(`_fastsave_impl_lz4Compress`, object, level)
 }
 
 impl_lz4Uncompress <- function(raw) {
-    .Call(`_genser_impl_lz4Uncompress`, raw)
+    .Call(`_fastsave_impl_lz4Uncompress`, raw)
 }
 
 impl_snappyCompress <- function(object) {
-    .Call(`_genser_impl_snappyCompress`, object)
+    .Call(`_fastsave_impl_snappyCompress`, object)
 }
 
 impl_snappyUncompress <- function(raw) {
-    .Call(`_genser_impl_snappyUncompress`, raw)
+    .Call(`_fastsave_impl_snappyUncompress`, raw)
 }
 
 impl_zstdCompress <- function(object, level) {
-    .Call(`_genser_impl_zstdCompress`, object, level)
+    .Call(`_fastsave_impl_zstdCompress`, object, level)
 }
 
 impl_zstdUncompress <- function(raw) {
-    .Call(`_genser_impl_zstdUncompress`, raw)
+    .Call(`_fastsave_impl_zstdUncompress`, raw)
 }
 

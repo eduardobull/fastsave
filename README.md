@@ -21,10 +21,10 @@ Usage
 library(fastsave)
 
 data(mtcars)
-tmp_dir <- tempdir()
+file_dir <- file.path(tempdir(), "mtcars")
 
-saveZstd(mtcars, file.path(tmp_dir, "mtcars"))
-mtcars2 <- readZstd(mtcars)
+saveZstd(mtcars, file_dir)
+mtcars2 <- readZstd(file_dir)
 
 stopifnot(identical(mtcars, mtcars2))
 ```

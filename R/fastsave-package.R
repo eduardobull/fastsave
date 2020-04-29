@@ -1,5 +1,5 @@
 ## usethis namespace: start
-#' @useDynLib genser, .registration = TRUE
+#' @useDynLib fastsave, .registration = TRUE
 ## usethis namespace: end
 NULL
 

@@ -1,5 +1,8 @@
-^.*\.Rproj$
 ^\.Rproj\.user$
+\.Rproj$
+\.Rhistory$
+\.RData$
+\.Ruserdata$
 ^\.vscode
 
 ^build$

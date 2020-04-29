@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // impl_lz4Compress
 RawVector impl_lz4Compress(RObject object, int level);
-RcppExport SEXP _genser_impl_lz4Compress(SEXP objectSEXP, SEXP levelSEXP) {
+RcppExport SEXP _fastsave_impl_lz4Compress(SEXP objectSEXP, SEXP levelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,7 +19,7 @@ END_RCPP
 }
 // impl_lz4Uncompress
 RawVector impl_lz4Uncompress(RObject raw);
-RcppExport SEXP _genser_impl_lz4Uncompress(SEXP rawSEXP) {
+RcppExport SEXP _fastsave_impl_lz4Uncompress(SEXP rawSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -30,7 +30,7 @@ END_RCPP
 }
 // impl_snappyCompress
 RawVector impl_snappyCompress(RObject object);
-RcppExport SEXP _genser_impl_snappyCompress(SEXP objectSEXP) {
+RcppExport SEXP _fastsave_impl_snappyCompress(SEXP objectSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -41,7 +41,7 @@ END_RCPP
 }
 // impl_snappyUncompress
 RawVector impl_snappyUncompress(RObject raw);
-RcppExport SEXP _genser_impl_snappyUncompress(SEXP rawSEXP) {
+RcppExport SEXP _fastsave_impl_snappyUncompress(SEXP rawSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -52,7 +52,7 @@ END_RCPP
 }
 // impl_zstdCompress
 RawVector impl_zstdCompress(RObject object, int level);
-RcppExport SEXP _genser_impl_zstdCompress(SEXP objectSEXP, SEXP levelSEXP) {
+RcppExport SEXP _fastsave_impl_zstdCompress(SEXP objectSEXP, SEXP levelSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -64,7 +64,7 @@ END_RCPP
 }
 // impl_zstdUncompress
 RawVector impl_zstdUncompress(RObject raw);
-RcppExport SEXP _genser_impl_zstdUncompress(SEXP rawSEXP) {
+RcppExport SEXP _fastsave_impl_zstdUncompress(SEXP rawSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -75,16 +75,16 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_genser_impl_lz4Compress", (DL_FUNC) &_genser_impl_lz4Compress, 2},
-    {"_genser_impl_lz4Uncompress", (DL_FUNC) &_genser_impl_lz4Uncompress, 1},
-    {"_genser_impl_snappyCompress", (DL_FUNC) &_genser_impl_snappyCompress, 1},
-    {"_genser_impl_snappyUncompress", (DL_FUNC) &_genser_impl_snappyUncompress, 1},
-    {"_genser_impl_zstdCompress", (DL_FUNC) &_genser_impl_zstdCompress, 2},
-    {"_genser_impl_zstdUncompress", (DL_FUNC) &_genser_impl_zstdUncompress, 1},
+    {"_fastsave_impl_lz4Compress", (DL_FUNC) &_fastsave_impl_lz4Compress, 2},
+    {"_fastsave_impl_lz4Uncompress", (DL_FUNC) &_fastsave_impl_lz4Uncompress, 1},
+    {"_fastsave_impl_snappyCompress", (DL_FUNC) &_fastsave_impl_snappyCompress, 1},
+    {"_fastsave_impl_snappyUncompress", (DL_FUNC) &_fastsave_impl_snappyUncompress, 1},
+    {"_fastsave_impl_zstdCompress", (DL_FUNC) &_fastsave_impl_zstdCompress, 2},
+    {"_fastsave_impl_zstdUncompress", (DL_FUNC) &_fastsave_impl_zstdUncompress, 1},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_genser(DllInfo *dll) {
+RcppExport void R_init_fastsave(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }
