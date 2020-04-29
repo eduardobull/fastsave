@@ -48,7 +48,8 @@ third_party_dir="${root_dir}/src/third_party"
 lz4_version="1.9.2"
 
 lz4_src_dir="${third_party_dir}/lz4-$lz4_version"
-lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
+lz4_build_dir="${root_dir}/build/lz4-$lz4_version"
+# lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
 
 AC_MSG_NOTICE([Building lz4 library])
 
@@ -77,7 +78,8 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${LZ4_LIBS}"])
 zstd_version="1.4.4"
 
 zstd_src_dir="${third_party_dir}/zstd-$zstd_version"
-zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
+zstd_build_dir="${root_dir}/build/zstd-$zstd_version"
+# zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
 
 AC_MSG_NOTICE([Building zstd library])
 
@@ -108,7 +110,8 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${ZSTD_LIBS}"])
 snappy_version="1.1.8"
 
 snappy_src_dir="${third_party_dir}/snappy-$snappy_version"
-snappy_build_dir=$(mktemp -d -t snappy_build_XXXXXX)
+snappy_build_dir="${root_dir}/build/snappy-$snappy_version"
+# snappy_build_dir=$(mktemp -d -t snappy_build_XXXXXX)
 
 AC_MSG_NOTICE([Building snappy library])
 
