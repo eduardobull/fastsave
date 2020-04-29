@@ -1,5 +1,0 @@
-CXX_STD = CXX11
-
-PKG_CFLAGS= -march=native -O2 -pipe -fno-plt -I/tmp/lz4_build_1tu8Md/include -I/tmp/zstd_build_TVK4Fk/include -I/tmp/snappy_build_JiIk7F/include
-PKG_CXXFLAGS= -march=native -O2 -pipe -fno-plt -I/tmp/lz4_build_1tu8Md/include -I/tmp/zstd_build_TVK4Fk/include -I/tmp/snappy_build_JiIk7F/include
-PKG_LIBS= /tmp/lz4_build_1tu8Md/lib/liblz4.a /tmp/zstd_build_TVK4Fk/lib/libzstd.a /tmp/snappy_build_JiIk7F/libsnappy.a

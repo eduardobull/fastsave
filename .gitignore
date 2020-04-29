@@ -9,7 +9,7 @@ src/*.o
 src/*.so
 src/*.dll
 
-# Makevars
+Makevars
 local/
 .vscode/
 
