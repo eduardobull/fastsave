@@ -130,8 +130,8 @@ $(cd ${snappy_build_dir} &&\
 		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
 		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DSNAPPY_BUILD_TESTS=OFF > /dev/null &&\
-	make > /dev/null)
+		-DSNAPPY_BUILD_TESTS=OFF &&\
+	make)
 
 AC_MSG_NOTICE([Finished building snappy library])
 
