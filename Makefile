@@ -1,3 +1,4 @@
+R ?= R
 THIRD_PARTY_DIR := src/third_party
 
 define latest_version
@@ -6,17 +7,15 @@ endef
 
 default: install
 
-check: clean prepare
-	R CMD check .
+check: clean prepare build
+	$(R) CMD check . --as-cran --ignore-vignettes --no-stop-on-test-error
 
 prepare:
 	autoconf
 	Rscript --vanilla -e "Rcpp::compileAttributes()"
 
 build:
-	Rscript --vanilla -e "Rcpp::compileAttributes()"
-	Rscript --vanilla -e "devtools::build()"
-	Rscript --vanilla -e "devtools::build(binary = TRUE, args = c('--preclean'))"
+	$(R) CMD build . --no-build-vignettes
 
 install:
 	autoconf
@@ -26,7 +25,7 @@ install:
 clean:
 	find . -regex '.*\.s?o$$' -exec rm -v {} \;
 	find . -regex '.*\.a$$' -exec rm -v {} \;
-	rm -rfv autom4te.cache configure config.log config.status src/Makevars ..Rcheck
+	$(RM) -rfv autom4te.cache configure config.log config.status src/Makevars ..Rcheck
 
 update-lz4:
 	$(eval lz4_version=$(subst v,,$(call latest_version,lz4/lz4)))
@@ -42,13 +41,6 @@ update-zstd:
 		curl -L "https://github.com/facebook/zstd/archive/v${zstd_version}.tar.gz" | tar xz zstd-${zstd_version}/lib
 	sed -i 's/^zstd_version=.*/zstd_version="${zstd_version}"/' configure.ac
 
-update-snappy:
-	$(eval snappy_version=$(subst v,,$(call latest_version,google/snappy)))
-	rm -rf ${THIRD_PARTY_DIR}/snappy-*
-	cd ${THIRD_PARTY_DIR} && \
-		curl -L "https://github.com/google/snappy/archive/${snappy_version}.tar.gz" | tar xz
-	sed -i 's/^snappy_version=.*/snappy_version="${snappy_version}"/' configure.ac
+update-all: update-lz4 update-zstd
 
-update-all: update-lz4 update-snappy update-zstd
-
-.PHONY: default build install clean update-all update-lz4 update-zstd update-snappy
+.PHONY: default build install clean update-all update-lz4 update-zstd

@@ -116,34 +116,6 @@ AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${ZSTD_LIBS}"])
 
 
 ## --------------------------------------------
-## SNAPPY
-snappy_version="1.1.8"
-
-snappy_src_dir="${third_party_dir}/snappy-$snappy_version"
-snappy_build_dir=$(mktemp -d -t snappy_build_XXXXXX)
-
-AC_MSG_NOTICE([Building snappy library])
-
-$(cd ${snappy_build_dir} &&\
-	cmake "${snappy_src_dir}" \
-		-DCMAKE_CXX_FLAGS="${R_CXXFLAGS}" \
-		-DCMAKE_C_FLAGS="${R_CFLAGS}" \
-		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DSNAPPY_BUILD_TESTS=OFF &&\
-	make)
-
-AC_MSG_NOTICE([Finished building snappy library])
-
-SNAPPY_INCL="-I${snappy_build_dir}/include"
-SNAPPY_LIBS="${snappy_build_dir}/libsnappy.a"
-
-AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${SNAPPY_INCL}"])
-AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${SNAPPY_INCL}"])
-AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${SNAPPY_LIBS}"])
-
-
-## --------------------------------------------
 
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT

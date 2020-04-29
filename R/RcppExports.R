@@ -9,14 +9,6 @@ impl_lz4Uncompress <- function(raw) {
     .Call(`_fastsave_impl_lz4Uncompress`, raw)
 }
 
-impl_snappyCompress <- function(object) {
-    .Call(`_fastsave_impl_snappyCompress`, object)
-}
-
-impl_snappyUncompress <- function(raw) {
-    .Call(`_fastsave_impl_snappyUncompress`, raw)
-}
-
 impl_zstdCompress <- function(object, level) {
     .Call(`_fastsave_impl_zstdCompress`, object, level)
 }

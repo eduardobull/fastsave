@@ -28,8 +28,8 @@ data(mtcars)
 file_dir <- file.path(tempdir(), "mtcars")
 
 # Package usage
-saveZstd(mtcars, file_dir) # or saveSnappy or saveLZ4
-mtcars2 <- readZstd(file_dir) # or readZstd or readLZ4
+saveZstd(mtcars, file_dir) # or saveLZ4
+mtcars2 <- readZstd(file_dir) # or readLZ4
 
 # Test code
 stopifnot(identical(mtcars, mtcars2))
@@ -40,5 +40,4 @@ Links
 -----
 
 -   [zstandard official site](http://facebook.github.io/zstd/)
--   [snappy official site](https://github.com/google/snappy/)
 -   [lz4 official site](https://github.com/lz4/lz4/)

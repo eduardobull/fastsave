@@ -7,15 +7,13 @@ Author: Eduardo Gutierres <eduardo.bull@gmail.com>
 Authors@R: c(
   person("Eduardo", "Gutierres", email = "eduardo.bull@gmail.com", role = c("aut", "cre", "cph")),
   person("Yann", "Collet", role = "cph", comment = "Bundled LZ4 code"),
-  person("Google Inc.", role = "cph", comment = "Bundled Snappy code"),
   person("Facebook, Inc.", role = "cph", comment = "Bundled Zstandard code"))
 Maintainer: Eduardo Gutierres <eduardo.bull@gmail.com>
-Description: Serialization and compression of R objects using Zstandard, Snappy or LZ4 compressors,
+Description: Serialization and compression of R objects using Zstandard or LZ4 compressors,
   providing a faster alternative to saveRDS and readRDS.
 License: MIT + file LICENSE
 Copyright: This package includes sources of the LZ4 library written
   by Yann Collet, of the Zstandard library owned by Facebook, Inc.
-  and of the Snappy library owned by Google Inc.
 LazyLoad: yes
 Depends: R (>= 3.3.0)
 LinkingTo: Rcpp

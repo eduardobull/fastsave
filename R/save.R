@@ -13,14 +13,14 @@
 #' @name fast-save
 NULL
 
-saveObject <- function(object, file, compressor = c("zstd", "snappy", "lz4"), ...) {
+saveObject <- function(object, file, compressor = c("zstd", "lz4"), ...) {
   object.ser <- serialize(object, connection = NULL)
   object.comp <- compress(object.ser, compressor, ...)
 
   writeBin(object.comp, file)
 }
 
-readObject <- function(file, decompressor = c("auto", "zstd", "snappy", "lz4"), ...) {
+readObject <- function(file, decompressor = c("auto", "zstd", "lz4"), ...) {
   object.comp <- readBin(file, "raw", n = file.size(file))
   object.ser <- decompress(object.comp, decompressor, ...)
 
@@ -49,16 +49,4 @@ saveZstd <- function(object, file, level = -1) {
 #' @export
 readZstd <- function(file) {
   readObject(file, "zstd")
-}
-
-#' @rdname fast-save
-#' @export
-saveSnappy <- function(object, file) {
-  saveObject(object, file, "snappy")
-}
-
-#' @rdname fast-save
-#' @export
-readSnappy <- function(file) {
-  readObject(file, "snappy")
 }

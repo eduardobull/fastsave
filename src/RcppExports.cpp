@@ -28,28 +28,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// impl_snappyCompress
-RawVector impl_snappyCompress(RObject object);
-RcppExport SEXP _fastsave_impl_snappyCompress(SEXP objectSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RObject >::type object(objectSEXP);
-    rcpp_result_gen = Rcpp::wrap(impl_snappyCompress(object));
-    return rcpp_result_gen;
-END_RCPP
-}
-// impl_snappyUncompress
-RawVector impl_snappyUncompress(RObject raw);
-RcppExport SEXP _fastsave_impl_snappyUncompress(SEXP rawSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< RObject >::type raw(rawSEXP);
-    rcpp_result_gen = Rcpp::wrap(impl_snappyUncompress(raw));
-    return rcpp_result_gen;
-END_RCPP
-}
 // impl_zstdCompress
 RawVector impl_zstdCompress(RObject object, int level);
 RcppExport SEXP _fastsave_impl_zstdCompress(SEXP objectSEXP, SEXP levelSEXP) {
@@ -77,8 +55,6 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_fastsave_impl_lz4Compress", (DL_FUNC) &_fastsave_impl_lz4Compress, 2},
     {"_fastsave_impl_lz4Uncompress", (DL_FUNC) &_fastsave_impl_lz4Uncompress, 1},
-    {"_fastsave_impl_snappyCompress", (DL_FUNC) &_fastsave_impl_snappyCompress, 1},
-    {"_fastsave_impl_snappyUncompress", (DL_FUNC) &_fastsave_impl_snappyUncompress, 1},
     {"_fastsave_impl_zstdCompress", (DL_FUNC) &_fastsave_impl_zstdCompress, 2},
     {"_fastsave_impl_zstdUncompress", (DL_FUNC) &_fastsave_impl_zstdUncompress, 1},
     {NULL, NULL, 0}
