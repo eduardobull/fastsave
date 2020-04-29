@@ -18,14 +18,18 @@ Usage
 -----
 
 ``` r
+# Load package
 library(fastsave)
 
+# Test dataset and temporary file path
 data(mtcars)
 file_dir <- file.path(tempdir(), "mtcars")
 
-saveZstd(mtcars, file_dir)
-mtcars2 <- readZstd(file_dir)
+# Package usage
+saveZstd(mtcars, file_dir) # or saveSnappy or saveLZ4
+mtcars2 <- readZstd(file_dir) # or readZstd or readLZ4
 
+# Test code
 stopifnot(identical(mtcars, mtcars2))
 ```
 
