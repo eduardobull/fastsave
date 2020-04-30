@@ -1,4 +1,4 @@
-R ?= R
+R ?= R --vanilla -q
 THIRD_PARTY_DIR := src/third_party
 
 define latest_version
@@ -12,15 +12,13 @@ check: clean prepare build
 
 prepare:
 	autoconf
-	Rscript --vanilla -e "Rcpp::compileAttributes()"
+	$(R) -e "Rcpp::compileAttributes()"
 
-build:
+build: clean prepare
 	$(R) CMD build . --no-build-vignettes
 
-install:
-	autoconf
-	Rscript --vanilla -e "Rcpp::compileAttributes()"
-	R CMD INSTALL --no-multiarch --strip .
+install: clean prepare
+	$(R) CMD INSTALL --no-multiarch --strip .
 
 clean:
 	find . -regex '.*\.s?o$$' -exec rm -v {} \;

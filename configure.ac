@@ -46,51 +46,18 @@ third_party_dir="${root_dir}/src/third_party"
 
 
 ## --------------------------------------------
-## LZ4
-lz4_version="1.9.2"
-
-lz4_src_dir="${third_party_dir}/lz4-$lz4_version"
-lz4_build_dir=$(mktemp -d -t lz4_build_XXXXXX)
-
-AC_MSG_NOTICE([Building lz4 library])
-
-$(cd ${lz4_src_dir} &&\
-	cp -r * ${lz4_build_dir}
-	cd ${lz4_build_dir}/lib &&\
-	make liblz4.a > /dev/null 2>&1)
-
-# $(cd ${lz4_src_dir} &&\
-# 	find . -type d -exec mkdir -p -- ${lz4_build_dir}/{} \; &&\
-# 	find . -type f \
-# 		\( -regex '.*\.c\(pp\)?' -o \
-# 		   -regex '.*\.h\(pp\)?' -o \
-# 		   -name 'Makefile*' \) \
-# 		-exec cp --parents {} ${lz4_build_dir} \; &&\
-# 	cd ${lz4_build_dir}/lib &&\
-# 	make liblz4.a > /dev/null 2>&1)
-
-AC_MSG_NOTICE([Finished building lz4 library])
-
-LZ4_INCL="-I${lz4_build_dir}/include"
-LZ4_LIBS="${lz4_build_dir}/lib/liblz4.a"
-
-AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${LZ4_INCL}"])
-AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${LZ4_INCL}"])
-AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${LZ4_LIBS}"])
-
-
-## --------------------------------------------
 ## ZSTD
 zstd_version="1.4.4"
 
-zstd_src_dir="${third_party_dir}/zstd-$zstd_version"
-zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
+zstd_src_dir="${third_party_dir}/zstd-$zstd_version/lib"
+zstd_build_dir="${root_dir}/build"
+# zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
 
 AC_MSG_NOTICE([Building zstd library])
 
 $(cd ${zstd_src_dir} &&\
 	cp -r * ${zstd_build_dir}
-	cd ${zstd_build_dir}/lib &&\
+	cd ${zstd_build_dir} &&\
 	make libzstd.a > /dev/null 2>&1)
 
 # $(cd ${zstd_build_dir} &&\
@@ -108,7 +75,7 @@ $(cd ${zstd_src_dir} &&\
 AC_MSG_NOTICE([Finished building zstd library])
 
 ZSTD_INCL="-I${zstd_build_dir}/include"
-ZSTD_LIBS="${zstd_build_dir}/lib/libzstd.a"
+ZSTD_LIBS="${zstd_build_dir}/libzstd.a"
 
 AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${ZSTD_INCL}"])
 AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${ZSTD_INCL}"])
