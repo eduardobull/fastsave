@@ -4,7 +4,9 @@ PKG_CFLAGS=@PKG_CFLAGS@
 PKG_CXXFLAGS=@PKG_CXXFLAGS@
 PKG_LIBS=@PKG_LIBS@
 
-all: zstd $(SHLIB)
+all: $(SHLIB)
+
+$(SHLIB): zstd
 
 zstd:
 	cd @zstd_build_dir@ &&\
