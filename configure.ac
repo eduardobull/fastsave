@@ -52,8 +52,8 @@ AC_MSG_NOTICE([Building zstd library])
 zstd_version="1.4.4"
 
 zstd_src_dir="${third_party_dir}/zstd-${zstd_version}"
-# zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
-zstd_build_dir="${root_dir}/build"
+zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
+# zstd_build_dir="${root_dir}/build"
 
 ZSTD_INCL="-I${zstd_build_dir}/include"
 ZSTD_LIBS="${zstd_build_dir}/lib/libzstd.a"

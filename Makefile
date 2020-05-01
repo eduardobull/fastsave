@@ -1,5 +1,6 @@
 FIND ?= find
 R ?= R --vanilla -q
+ECHO ?= echo -e
 
 THIRD_PARTY_DIR := src/third_party
 
@@ -9,7 +10,7 @@ endef
 
 default: install
 
-check: clean prepare build
+check: clean prepare
 	$(R) CMD check . --as-cran --ignore-vignettes --no-stop-on-test-error
 
 prepare:
@@ -25,8 +26,7 @@ install: clean prepare
 clean:
 	$(FIND) . -regex '.*\.s?o$$' -exec rm -v {} \;
 	$(FIND) . -regex '.*\.a$$' -exec rm -v {} \;
-	$(RM) -rv build/*
-	echo -e "*\n.gitignore" > build/.gitignore
+	$(RM) -rv build/* && $(ECHO) "*\n.gitignore" > build/.gitignore
 	$(RM) -rv autom4te.cache configure config.log config.status src/Makevars ..Rcheck
 
 update-lz4:
