@@ -47,40 +47,25 @@ third_party_dir="${root_dir}/src/third_party"
 
 ## --------------------------------------------
 ## ZSTD
-zstd_version="1.4.4"
-
-zstd_src_dir="${third_party_dir}/zstd-$zstd_version/lib"
-zstd_build_dir="${root_dir}/build"
-# zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
-
 AC_MSG_NOTICE([Building zstd library])
 
-$(cd ${zstd_src_dir} &&\
-	cp -r * ${zstd_build_dir}
-	cd ${zstd_build_dir} &&\
-	make libzstd.a > /dev/null 2>&1)
+zstd_version="1.4.4"
 
-# $(cd ${zstd_build_dir} &&\
-# 	cmake "${zstd_src_dir}/build/cmake/" \
-# 		-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
-# 		-DCMAKE_C_FLAGS="${CFLAGS}" \
-# 		-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-# 		-DCMAKE_BUILD_TYPE=Release \
-# 		-DZSTD_BUILD_STATIC=ON \
-# 		-DZSTD_BUILD_SHARED=OFF \
-# 		-DZSTD_BUILD_PROGRAMS=OFF \
-# 		-DZSTD_BUILD_TESTS=OFF > /dev/null 2>&1 &&\
-# 	make > /dev/null 2>&1)
-
-AC_MSG_NOTICE([Finished building zstd library])
+zstd_src_dir="${third_party_dir}/zstd-${zstd_version}"
+# zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
+zstd_build_dir="${root_dir}/build"
 
 ZSTD_INCL="-I${zstd_build_dir}/include"
-ZSTD_LIBS="${zstd_build_dir}/libzstd.a"
+ZSTD_LIBS="${zstd_build_dir}/lib/libzstd.a"
 
 AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${ZSTD_INCL}"])
 AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${ZSTD_INCL}"])
 AC_SUBST([PKG_LIBS],["${PKG_LIBS} ${ZSTD_LIBS}"])
 
+AC_SUBST([zstd_src_dir],["${zstd_src_dir}"])
+AC_SUBST([zstd_build_dir],["${zstd_build_dir}"])
+
+AC_MSG_NOTICE([Finished building zstd library])
 
 ## --------------------------------------------
 

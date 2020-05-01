@@ -3,3 +3,20 @@ CXX_STD = CXX11
 PKG_CFLAGS=@PKG_CFLAGS@
 PKG_CXXFLAGS=@PKG_CXXFLAGS@
 PKG_LIBS=@PKG_LIBS@
+
+all: zstd $(SHLIB)
+
+zstd:
+	cd @zstd_build_dir@ &&\
+		cmake "@zstd_src_dir@/build/cmake/" \
+			-DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+			-DCMAKE_C_FLAGS="${CFLAGS}" \
+			-DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+			-DCMAKE_BUILD_TYPE=Release \
+			-DZSTD_BUILD_STATIC=ON \
+			-DZSTD_BUILD_SHARED=OFF \
+			-DZSTD_BUILD_PROGRAMS=OFF \
+			-DZSTD_BUILD_TESTS=OFF &&\
+		make
+
+.PHONY: all zstd
