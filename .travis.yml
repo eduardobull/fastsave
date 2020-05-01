@@ -5,6 +5,9 @@ compiler: clang
 language: r
 r:
   - release
+r_check_args: --no-build-vignettes --no-manual
+r_build_args: --no-build-vignettes --no-manual --no-resave-data
+warnings_are_errors: false
 cache: packages
 addons:
   apt:
