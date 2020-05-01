@@ -37,7 +37,6 @@ export CC=${R_CC}
 export CFLAGS="${R_CFLAGS} -fPIC"
 export CPPFLAGS=${R_CPPFLAGS}
 
-
 AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${CFLAGS}"])
 AC_SUBST([PKG_CXXFLAGS],["${PKG_CXXFLAGS} ${CXXFLAGS}"])
 
@@ -55,7 +54,8 @@ zstd_src_dir="${third_party_dir}/zstd-${zstd_version}"
 zstd_build_dir=$(mktemp -d -t zstd_build_XXXXXX)
 # zstd_build_dir="${root_dir}/build"
 
-ZSTD_INCL="-I${zstd_build_dir}/include"
+# ZSTD_INCL="-I${zstd_build_dir}/include"
+ZSTD_INCL="-I${zstd_build_dir}/lib"
 ZSTD_LIBS="${zstd_build_dir}/lib/libzstd.a"
 
 AC_SUBST([PKG_CFLAGS],["${PKG_CFLAGS} ${ZSTD_INCL}"])
